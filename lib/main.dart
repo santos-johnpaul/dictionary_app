@@ -159,3 +159,23 @@ class _MyDictionaryPageState extends State<MyDictionaryPage> {
         backgroundColor: Colors.green,
         textColor: Colors.white,
         fontSize: 16.0,
+         );
+    } else {
+      definition = "No Available Data";
+      example = "No Available Data";
+      setState(() {});
+
+      Fluttertoast.showToast(
+        msg: "Not Found",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+
+    progressDialog.dismiss();
+  }
+}
