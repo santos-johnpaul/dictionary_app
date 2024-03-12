@@ -118,3 +118,44 @@ class _MyDictionaryPageState extends State<MyDictionaryPage> {
                               example != null && example.isNotEmpty ? example : 'No Example Available',
                               style: const TextStyle(fontSize: 16),
                             ),
+                            ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> onSearchPressed() async {
+    ProgressDialog progressDialog = ProgressDialog(
+      context,
+      message: const Text("Dictionary"),
+      title: const Text("Searching..."),
+    );
+    progressDialog.show();
+
+    String word = wordController.text;
+    var url = Uri.parse( 'https://api.dictionaryapi.dev/api/v2/entries/en/$word');
+    var response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      var parsedJson = json.decode(response.body);
+      definition = parsedJson[0]['meanings'][0]['definitions'][0]['definition'].toString();
+      example = parsedJson[0]['meanings'][0]['definitions'][0]['example']?.toString() ?? '';
+      setState(() {});
+      log(definition);
+
+      Fluttertoast.showToast(
+        msg: "Found!!!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
